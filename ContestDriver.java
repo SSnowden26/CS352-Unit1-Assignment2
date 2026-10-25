@@ -14,7 +14,8 @@ public class ContestDriver {
 		// Step 2
 		// Create multiple Contestants and add them to an ArrayList
 		// Do something simple to get started, but remember, you will need
-		// to generate up to 1,000,000 Contestants	
+		// to generate up to 1,000,000 Contestants
+		// another comment	
 		
 		
 		// Steps 3 and 4
