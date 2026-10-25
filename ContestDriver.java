@@ -36,7 +36,13 @@ public class ContestDriver {
 		// that no Contestant is consistently stuck at one end of the line.
 		fairnessCheck(8, 12);
 
-		// Steps 6-7 added below (timing)
+		// Steps 6-7 - time how long it takes to run the round-playing
+		// simulation itself (not the fairness bookkeeping above) for a
+		// range of Contestant counts and round counts.
+		int[] roundCounts = { 10, 100, 1000, 10000 };
+		timingTable(43, roundCounts);
+		timingTable(45000, roundCounts);
+
 		System.out.println("Finished");
 	}
 
@@ -149,6 +155,27 @@ public class ContestDriver {
 		for (Contestant c : line) {
 			System.out.printf("%-14s avg position = %.2f (over %d rounds)%n",
 					c.getName(), c.getAveragePosition(), c.getRoundsPlayed());
+		}
+	}
+
+	/* Steps 6-7: for a fixed Contestant count n, times how long it takes
+	 * to play each round count in roundCounts. A fresh line of n
+	 * Contestants is built for each round count so the runs don't affect
+	 * each other. The timer covers only playRound() - it does not include
+	 * building the Contestants or any fairness bookkeeping, since the
+	 * assignment asks to measure just the simulation itself.
+	 */
+	private static void timingTable(int n, int[] roundCounts) {
+		System.out.println("\n--- Timing: " + n + " Contestants ---");
+		System.out.printf("%-10s%-15s%n", "Rounds", "Time (ms)");
+		for (int rounds : roundCounts) {
+			ArrayList<Contestant> line = makeContestants(n);
+			long start = System.nanoTime();
+			for (int r = 0; r < rounds; r++) {
+				playRound(line);
+			}
+			long elapsedMs = (System.nanoTime() - start) / 1_000_000;
+			System.out.printf("%-10d%-15d%n", rounds, elapsedMs);
 		}
 	}
 
