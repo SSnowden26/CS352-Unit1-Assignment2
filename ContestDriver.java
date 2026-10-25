@@ -31,11 +31,12 @@ public class ContestDriver {
 		verifyAlgorithm();
 		oneRoundDemo();
 
-		// Steps 5 - 7
-		// Repeat Steps 3 and 4 many times to gather data.
-		// You will need to modify the Contestant class so each Contestant
-		// will keep track of its individual statistics. Be smart about how you record its
-		// position at the end of each round.
+		// Step 5 - repeat Steps 3-4 for many rounds, recording each
+		// Contestant's position at the end of every round, then check
+		// that no Contestant is consistently stuck at one end of the line.
+		fairnessCheck(8, 12);
+
+		// Steps 6-7 added below (timing)
 		System.out.println("Finished");
 	}
 
@@ -123,6 +124,32 @@ public class ContestDriver {
 		System.out.println("Before: " + namesOf(line));
 		playRound(line);
 		System.out.println("After:  " + namesOf(line));
+	}
+
+	// Step 5: records every Contestant's current index in the line.
+	private static void recordPositions(ArrayList<Contestant> line) {
+		for (int i = 0; i < line.size(); i++) {
+			line.get(i).recordPosition(i);
+		}
+	}
+
+	/* Step 5: plays the given number of rounds with n Contestants,
+	 * recording each Contestant's position after every round, then prints
+	 * each Contestant's average position. If the algorithm is fair, these
+	 * averages should all land near the middle of the line (n - 1) / 2
+	 * rather than clustering any one Contestant near the front or back.
+	 */
+	private static void fairnessCheck(int n, int rounds) {
+		System.out.println("\n--- Fairness check: " + n + " Contestants, " + rounds + " rounds ---");
+		ArrayList<Contestant> line = makeContestants(n);
+		for (int r = 0; r < rounds; r++) {
+			playRound(line);
+			recordPositions(line);
+		}
+		for (Contestant c : line) {
+			System.out.printf("%-14s avg position = %.2f (over %d rounds)%n",
+					c.getName(), c.getAveragePosition(), c.getRoundsPlayed());
+		}
 	}
 
 }
