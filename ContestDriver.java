@@ -6,10 +6,10 @@ public class ContestDriver {
 
 		// Step -1 Compile the program as is to be sure it runs
 
-		// Step 0 - Uncomment the two lines below, then add code to the Contestant class to make this compile
-		// This creates a single Contestant and prints its attributes, just to show it can be done
-		// Contestant ac = new Contestant("Billy",22);
-		// System.out.println(ac);
+		// Step 0 - creates a single Contestant and prints its attributes,
+		// just to show the Contestant class compiles and runs correctly
+		Contestant ac = new Contestant("Billy", 22);
+		System.out.println(ac);
 		
 		// Step 2
 		// Create multiple Contestants and add them to an ArrayList
